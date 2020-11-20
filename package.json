@@ -8,7 +8,18 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "bolt": "^0.24.7",
     "core-js": "^3.6.5",
+    "cors": "^2.8.5",
+    "cypher": "0.0.1",
+    "driver": "^1.0.0",
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "javascript": "^1.0.0",
+    "neo4j-driver": "^4.2.1",
+    "nodemon": "^2.0.6",
+    "request": "^2.88.2",
     "vue": "^2.6.11",
     "vuetify": "^2.2.11"
   },

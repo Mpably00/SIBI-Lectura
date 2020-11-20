@@ -29,17 +29,6 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
     </v-app-bar>
     <v-sheet
       id="scrolling-techniques-2"
@@ -62,7 +51,7 @@
               :src="card.src"
               class="white--text align-end"
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="200px"
+              height="300px"
             >
               
             </v-img>
@@ -70,12 +59,7 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
-
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-
-              <v-btn>
+              <v-btn color="secundary">
                 RECOMENDAR
               </v-btn>
             </v-card-actions>
@@ -91,10 +75,10 @@
     data: () => ({
       cards: [
         { title: '0-5 AÑOS', src: 'https://i.pinimg.com/originals/53/d5/6c/53d56c027aada941b25496a1db3dd3fa.jpg', flex: 6 },
-        { title: '6-8 AÑOS', src: 'http://lalupa3.webcindario.com/clasicos/imagenes/conejos.jpg', flex: 6 },
+        { title: '6-8 AÑOS', src: 'https://s-media-cache-ak0.pinimg.com/originals/45/4d/74/454d743a2d82f69a253bb5dbf54fee5d.jpg', flex: 6 },
         { title: '9-10 AÑOS', src: 'http://haciendoelindio.com/wp-content/uploads/abcd.jpg', flex: 6 },
-        { title: '11-15 AÑOS', src: 'https://i.pinimg.com/originals/78/8f/a4/788fa4ffac9b4b1dcb42be19aff821dd.jpg', flex: 6 },
-        { title: '+15 AÑOS', src: 'https://www.educaciontrespuntocero.com/wp-content/uploads/2017/11/SUPERHEROES_1-696x398.jpg', flex: 12}
+        { title: '11-15 AÑOS', src: 'https://i.ebayimg.com/images/g/XooAAOSwjONdl~wY/s-l300.jpg', flex: 6 },
+        { title: '+15 AÑOS', src: 'https://i.ytimg.com/vi/A3EvA_Zjh1s/hqdefault.jpg', flex: 12}
       ],
     }),
       data1: () => ({
