@@ -14,8 +14,6 @@
       src="http://www.atochabetanzos.com/wp-content/uploads/2019/05/nenes-leyendo_0.jpg"
       scroll-target="#scrolling-techniques-2"
     >
-    <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-
       <template v-slot:img="{ props }">
         <v-img
           v-bind="props"
@@ -23,10 +21,8 @@
         ></v-img>
       </template>
 
-
-
-      <v-toolbar-title>BIENVENIDO PEQUEÑO LECTOR</v-toolbar-title>
-
+      <router-link to ="/App">VOLVER</router-link>
+      
       <v-spacer></v-spacer>
 
     </v-app-bar>
@@ -59,9 +55,7 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="secundary">
-                RECOMENDAR
-              </v-btn>
+        
             </v-card-actions>
           </v-card>
         </v-col>
@@ -71,8 +65,18 @@
 </template>
 
 <script>
+
+import Vue from "vue";
+import VueRouter from "vue-router";
+const axios = require("axios");
+Vue.use(VueRouter);
+
   export default {
     data: () => ({
+      drawer: false,
+      group: null,
+      libros: [],
+
       cards: [
         { title: '0-5 AÑOS', src: 'https://i.pinimg.com/originals/53/d5/6c/53d56c027aada941b25496a1db3dd3fa.jpg', flex: 6 },
         { title: '6-8 AÑOS', src: 'https://s-media-cache-ak0.pinimg.com/originals/45/4d/74/454d743a2d82f69a253bb5dbf54fee5d.jpg', flex: 6 },
@@ -80,12 +84,39 @@
         { title: '11-15 AÑOS', src: 'https://i.ebayimg.com/images/g/XooAAOSwjONdl~wY/s-l300.jpg', flex: 6 },
         { title: '+15 AÑOS', src: 'https://i.ytimg.com/vi/A3EvA_Zjh1s/hqdefault.jpg', flex: 12}
       ],
+    
     }),
-      data1: () => ({
-      drawer: false,
-      group: null,
-    }),
-  }  
+    
+    methods: {
+      clicar: function(){
+        alert("Has pulsado este boton");
+
+        /*axios.get("http://localhost:3000/real").then(respuesta=>{
+            console.log(respuesta);
+        });*/
+
+      },
+      recogerDatos(respuesta){
+          this.title=respuesta.titulo;
+          this.edad=respuesta.edad;
+          this.puntuacion=respuesta.puntuacion;
+          this.precio=respuesta.precio;
+          this.autor=respuesta.autor;
+      },
+      send: function (){
+        /*var respuesta = {
+          Edad: this.Edad,
+          autor: this.autor,
+          puntuacion: this.puntuacion,
+          precio: this.precio
+      };*/
+      
+      axios.get("http://localhost:3000/real").then(respuesta=>{
+            console.log(respuesta);
+        });
+        
+      },
+    }
+  }
   
 </script>
-

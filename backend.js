@@ -7,10 +7,13 @@ var http = require("http");
 var request= require("request");
 const neo4j = require("neo4j-driver");
 const { query } = require("express");
+const { default: VueRouter } = require("vue-router");
 const driver= neo4j.driver(
   "bolt://localhost",
   neo4j.auth.basic("neo4j", "Maday123")
 );
+
+
 const session = driver.session();
 app.use(cors());
 app.use(bodyParser.json());
