@@ -21,8 +21,10 @@
         ></v-img>
       </template>
 
-      <router-link to ="/App">VOLVER</router-link>
-      
+    
+       <router-link to="/">
+                      VOLVER A INICIO
+              </router-link>
       <v-spacer></v-spacer>
 
     </v-app-bar>
@@ -53,6 +55,8 @@
             </v-img>
             <v-card-title v-text="card.title"></v-card-title>
 
+            <v-card-text >"aergerugeurgeiurgvierugvqierugviqeurgviqeurgviqerugvqeiur"</v-card-text>
+
             <v-card-actions>
               <v-spacer></v-spacer>
         
@@ -75,46 +79,49 @@ Vue.use(VueRouter);
     data: () => ({
       drawer: false,
       group: null,
-      libros: [],
+      titulo: "",
+      edad: "",
+      precio:"",
+      autor:"",
+      puntuacion:"",
 
       cards: [
-        { title: '0-5 AÑOS', src: 'https://i.pinimg.com/originals/53/d5/6c/53d56c027aada941b25496a1db3dd3fa.jpg', flex: 6 },
-        { title: '6-8 AÑOS', src: 'https://s-media-cache-ak0.pinimg.com/originals/45/4d/74/454d743a2d82f69a253bb5dbf54fee5d.jpg', flex: 6 },
-        { title: '9-10 AÑOS', src: 'http://haciendoelindio.com/wp-content/uploads/abcd.jpg', flex: 6 },
-        { title: '11-15 AÑOS', src: 'https://i.ebayimg.com/images/g/XooAAOSwjONdl~wY/s-l300.jpg', flex: 6 },
-        { title: '+15 AÑOS', src: 'https://i.ytimg.com/vi/A3EvA_Zjh1s/hqdefault.jpg', flex: 12}
+        { title: 'El jardín secreto', src: 'https://static.fnac-static.com/multimedia/Images/ES/NR/13/0c/55/5573651/1540-1.jpg', flex: 6 },
+        { title: 'TITULO TITULO', src: 'https://d.gr-assets.com/books/1347634104l/231815.jpg', flex: 6 },
+        { title: 'Siempre te querré pequeñín', src: 'https://i.ytimg.com/vi/Y12U1mEMgC8/mqdefault.jpg', flex: 6 },
+        { title: 'La pequeña oruga glotona', src: 'https://kangurines.com/wp-content/uploads/2018/03/ORUGAGLOTONA.jpg', flex: 6 },
       ],
     
     }),
+
+    mounted() {
+        axios.get("http://localhost:3000/real") .then(response => {
+          if (
+            response.body &&
+            response.body.length &&
+            response.body[0].message != "Error"
+
+          ){
+            alert("ERRORRRRRRRR");
+          }
+
+        this.titulo=response.data.precio;
+        alert(this.titulo);
+        this.recogerDatos(response);
+        
+      });
     
+    },
     methods: {
       clicar: function(){
         alert("Has pulsado este boton");
-
-        /*axios.get("http://localhost:3000/real").then(respuesta=>{
-            console.log(respuesta);
-        });*/
-
       },
-      recogerDatos(respuesta){
+       recogerDatos(respuesta){
           this.title=respuesta.titulo;
           this.edad=respuesta.edad;
           this.puntuacion=respuesta.puntuacion;
           this.precio=respuesta.precio;
           this.autor=respuesta.autor;
-      },
-      send: function (){
-        /*var respuesta = {
-          Edad: this.Edad,
-          autor: this.autor,
-          puntuacion: this.puntuacion,
-          precio: this.precio
-      };*/
-      
-      axios.get("http://localhost:3000/real").then(respuesta=>{
-            console.log(respuesta);
-        });
-        
       },
     }
   }

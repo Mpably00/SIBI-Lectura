@@ -25,34 +25,44 @@ app.post("/prueba",(req,res)=>{
 });
 
 
-app.post("/obtenerLibros", function(req,res){
+app.get("/obtenerLibros", function(req,res){
     var titulo = req.body.titulo;
     var autor = req.body.autor;
     var puntuacion = req.body.puntuacion;
     var edad = 8;
     var recomendado = req.body.recomendado;
-    var resultado= [];
+    var array= [];
 
     if(edad!="o"){
-      res.send("Estoy en el if");
-      var query="MATCH (n:libro) return n";
+      var query="MATCH (n:libro) WHERE n.edad = '8' return n";
       
     }
     else{
-      res.send("Estoy en el else");
       query = "MATCH (n:libro)";
     }
     
     const resultPromise = session.run(query).subscribe({
-    onNext: function (record) {
-      resultado.push(record.get(0).properties);
-      console.log(resultado);
-
-    },
-  });
+      onNext: function (record) {
+        array.push(record.get(0).properties);
+  
+      },
+      onCompleted: function () {
+        console.log(array.length);
+        var randon_int = Math.floor(Math.random() * array.length);
+        console.log(array[randon_int]);
+  
+        res.send([array[randon_int]]);
+  
+      },
+      onError: function (error) {
+        console.log(error);
+      }
+    });
 });
 app.get("/real", function (req, res) {
-  var query = "MATCH (n) return n";
+  var edad =0;
+  console.log(edad);
+  var query = "MATCH (n:Libro) WHERE (n.edad='"+edad+"') return n";
   console.log("prueba");
   var array = [];
 
@@ -63,6 +73,9 @@ app.get("/real", function (req, res) {
     },
     onCompleted: function () {
       console.log(array.length);
+      for(var i=0; i<5; i++){
+        console.log(array[i]);
+      }
       var randon_int = Math.floor(Math.random() * array.length);
       console.log(array[randon_int]);
 
