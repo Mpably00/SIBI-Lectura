@@ -59,12 +59,12 @@ app.get("/obtenerLibros", function(req,res){
       }
     });
 });
-app.get("/real", function (req, res) {
-  var edad =0;
-  console.log(edad);
-  var query = "MATCH (n:Libro) WHERE (n.edad='"+edad+"') return n";
-  console.log("prueba");
-  var array = [];
+    app.get("/real", function (req, res) {
+      var edad=req.query.edad;
+      console.log(req.query.edad);
+      var query = "MATCH (n:Libro) WHERE (n.edad='"+edad+"') return n";
+      console.log("prueba");
+      var array = [];
 
   const resultPromise = session.run(query).subscribe({
     onNext: function (record) {
@@ -73,13 +73,12 @@ app.get("/real", function (req, res) {
     },
     onCompleted: function () {
       console.log(array.length);
-      for(var i=0; i<5; i++){
+      for(var i=0; i<array.length; i++){
         console.log(array[i]);
+      
       }
-      var randon_int = Math.floor(Math.random() * array.length);
-      console.log(array[randon_int]);
 
-      res.send([array[randon_int]]);
+      res.send(array);
 
     },
     onError: function (error) {
@@ -87,6 +86,13 @@ app.get("/real", function (req, res) {
     }
   });
 }),
+
+app.get("/obtenerCarta",function(req,res){
+    var edad=req.body.edad;
+    console.log("Funcion de obtener carta");
+    console.log( "La edad es : " + edad);
+
+});
 
 app.listen(3000, function() {
     console.log("Example app listening on port " + 3000);

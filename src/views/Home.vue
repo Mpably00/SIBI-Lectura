@@ -59,7 +59,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               
-              <router-link to="/recomendar">
+              <router-link to="/recomendar" >
               <v-btn @click="clicar(card.carta)">
                       RECOMENDAR 
               </v-btn>
@@ -74,13 +74,17 @@
 </template>
 
 <script>
-
+import Vue from "vue";
+import VueRouter from "vue-router";
 const axios = require("axios");
+Vue.use(VueRouter);
+
   export default {
     data: () => ({
       drawer: false,
       group: null,
       libros: [],
+      
 
       cards: [
         { title: '0-3 AÑOS',carta: 1, src: 'https://i.pinimg.com/originals/53/d5/6c/53d56c027aada941b25496a1db3dd3fa.jpg', flex: 6 },
@@ -94,38 +98,68 @@ const axios = require("axios");
     
     methods: {
       clicar(carta){
+        this.$router.replace({path: "/recomendar/:edad", query: { edad : this.carta },});
+
         var i;
+        var j;
         var edades = [];
 
-        alert(carta);
-        edades.clear();
         if(carta==1){
           for(i=0;i<=3;i++){
-            edades.push[i];
+            edades[i]=i;
           }
+          this.imprimirEdades(edades);
         }
         else if(carta==2){
-          for(i=4;i<=7;i++){
-            edades.push[i];
+          for(j=0;j<=3;j++){
+            for(i=4;i<=7;i++){
+              edades[j]=i;
+            
+            }
           }
+          this.imprimirEdades(edades);
         }
         else if(carta ==3) {
+        for(j=0;j<=3;j++){
           for(i=8;i<=11;i++){
-            edades.push[i];
+            edades[j]=i;
+    
           }
+        }
+          this.imprimirEdades(edades);
 
         }
         else if (carta==4) {
-          for(i=12;i<=15;i++){
-            edades.push[i];
+          for(j=0;j<=3;j++){
+            for(i=11;i<15;i++){
+              edades[j]=i;
+            }
           }
+          this.imprimirEdades(edades);
         }
         else{
-          edades.push(110);
-
+          edades[0]=15;
+          this.imprimirEdades(edades);
         }
+        
 
-
+      },
+      imprimirEdades(edades){
+            var aux;
+            aux=edades[0];
+            alert(aux);
+        axios.get("http://localhost:3000/obtenerCarta", {
+          params: {
+            edad: aux,
+            
+          }
+          }) .then(response => {
+        alert(response);
+        
+      });
+           
+              
+          
       },
        recogerDatos(respuesta){
           this.title=respuesta.titulo;
@@ -133,19 +167,9 @@ const axios = require("axios");
           this.puntuacion=respuesta.puntuacion;
           this.precio=respuesta.precio;
           this.autor=respuesta.autor;
-      },
-      send: function (){
-        /*var respuesta = {
-          Edad: this.Edad,
-          autor: this.autor,
-          puntuacion: this.puntuacion,
-          precio: this.precio
-      };*/
+
+       
       
-      axios.get("http://localhost:3000/real").then(respuesta=>{
-            console.log(respuesta);
-        });
-        
       },
 
     }
