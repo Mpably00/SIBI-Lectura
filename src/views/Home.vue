@@ -76,7 +76,6 @@
 <script>
 import Vue from "vue";
 import VueRouter from "vue-router";
-const axios = require("axios");
 Vue.use(VueRouter);
 
   export default {
@@ -98,7 +97,7 @@ Vue.use(VueRouter);
     
     methods: {
       clicar(carta){
-        this.$router.replace({path: "/recomendar/:edad", query: { edad : this.carta },});
+        this.$router.replace({path: "/recomendar", query: { edad :carta }});
 
         var i;
         var j;
@@ -108,7 +107,7 @@ Vue.use(VueRouter);
           for(i=0;i<=3;i++){
             edades[i]=i;
           }
-          this.imprimirEdades(edades);
+
         }
         else if(carta==2){
           for(j=0;j<=3;j++){
@@ -117,7 +116,7 @@ Vue.use(VueRouter);
             
             }
           }
-          this.imprimirEdades(edades);
+
         }
         else if(carta ==3) {
         for(j=0;j<=3;j++){
@@ -126,7 +125,7 @@ Vue.use(VueRouter);
     
           }
         }
-          this.imprimirEdades(edades);
+
 
         }
         else if (carta==4) {
@@ -135,28 +134,15 @@ Vue.use(VueRouter);
               edades[j]=i;
             }
           }
-          this.imprimirEdades(edades);
+
         }
         else{
           edades[0]=15;
-          this.imprimirEdades(edades);
         }
         
 
       },
-      imprimirEdades(edades){
-            var aux;
-            aux=edades[0];
-            alert(aux);
-        axios.get("http://localhost:3000/obtenerCarta", {
-          params: {
-            edad: aux,
-            
-          }
-          }) .then(response => {
-        alert(response);
-        
-      });
+      imprimirEdades(){
            
               
           
