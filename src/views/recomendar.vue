@@ -26,9 +26,7 @@
                       VOLVER A INICIO
               </router-link>
       <v-spacer></v-spacer>
-    <v-btn-toggle>
-      Introduzca la edad:
-    </v-btn-toggle>
+    
     </v-app-bar>
     <v-sheet
       id="scrolling-techniques-2"
@@ -41,49 +39,50 @@
   <v-spacer></v-spacer>
   <v-card
     class="mx-auto"
-    max-width="30000000"
+    max-width="300000"
     outlined
   >
     <v-list-item three-line>
       <v-list-item-content>
         <v-list-item-title class="headline mb-1">
-            <v-card-title v-text="this.titulos[1]">
+            <v-card-title v-text="this.titulos[this.aleatorio]">
             </v-card-title>
         </v-list-item-title>
-        <v-list-item-subtitle v-text="devolverText(1)"></v-list-item-subtitle>
+        <v-list-item-subtitle v-text="devolverText(this.aleatorio)"></v-list-item-subtitle>
       </v-list-item-content>
 
-   
+    <div class="v-avatar ma-3 rounded-0">
         <v-img  
-        :src=" devolverImagen(1)"
-        class="white--text align-end"
-        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-        height="500px"
-        weight="300px">
+        :src=" devolverImagen(this.aleatorio)"
+        
+        
+        height="300px"
+        weight="150px">
 
         </v-img>
+    </div>
       
     </v-list-item>
   </v-card>
    <v-card
     class="mx-auto"
-    max-width="30000000"
+    max-width="300000"
     outlined
   >
     <v-list-item three-line>
       <v-list-item-content>
         <v-list-item-title class="headline mb-1">
-            <v-card-title v-text="this.titulo">
+            <v-card-title v-text="this.titulos[this.aleatorio1]">
             </v-card-title>
         </v-list-item-title>
-        <v-list-item-subtitle v-text="devolverText(3)"></v-list-item-subtitle>
+        <v-list-item-subtitle v-text="devolverText(this.aleatorio1)"></v-list-item-subtitle>
       </v-list-item-content>
 
-   <div center>
+   <div class="v-avatar ma-3 rounded-0">
         <v-img  
-        :src=" devolverImagen(3)"
+        :src=" devolverImagen(this.aleatorio1)"
         class="white--text align-end"
-        gradient="to bottom, rgba(0,0,0,.2), rgba(0,0,0,.5)"
+        
         height="500px"
         weight="300px">
         </v-img>
@@ -92,53 +91,55 @@
   </v-card>
    <v-card
     class="mx-auto"
-    max-width="30000000"
+    max-width="300000"
     outlined
   >
     <v-list-item three-line>
       <v-list-item-content>
         <v-list-item-title class="headline mb-1">
-            <v-card-title v-text="this.titulos[2]">
+            <v-card-title v-text="this.titulos[this.aleatorio2]">
             </v-card-title>
         </v-list-item-title>
-        <v-list-item-subtitle v-text="devolverText(2)"></v-list-item-subtitle>
+        <v-list-item-subtitle v-text="devolverText(this.aleatorio2)"></v-list-item-subtitle>
       </v-list-item-content>
 
-   
+   <div class="v-avatar ma-3 rounded-0">
         <v-img  
-        :src=" devolverImagen(2)"
-        class="white--text align-end"
-        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+        :src=" devolverImagen(this.aleatorio2)"
+    
+      
         height="500px"
         weight="300px">
 
         </v-img>
-      
+   </div>
+
     </v-list-item>
   </v-card>
    <v-card
     class="mx-auto"
-    max-width="30000000"
+    max-width="300000"
     outlined
   >
     <v-list-item three-line>
       <v-list-item-content>
         <v-list-item-title class="headline mb-1">
-            <v-card-title v-text="this.titulos[0]">
+            <v-card-title v-text="this.titulos[this.aleatorio3]">
             </v-card-title>
         </v-list-item-title>
-        <v-list-item-subtitle v-text="devolverText(0)"></v-list-item-subtitle>
+        <v-list-item-subtitle v-text="devolverText(this.aleatorio3)"></v-list-item-subtitle>
       </v-list-item-content>
 
-   
+   <div class="v-avatar ma-3 rounded-0">
         <v-img  
-        :src=" devolverImagen(0)"
+        :src=" devolverImagen(this.aleatorio3)"
         class="white--text align-end"
-        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+       
         height="500px"
         weight="300px">
 
         </v-img>
+   </div>
       
     </v-list-item>
   </v-card>
@@ -160,7 +161,6 @@ Vue.use(VueRouter);
      mounted() {
        var edadA;
        edadA=this.devolverCarta();
-       alert("La edad es : "+edadA);
         axios.get("http://localhost:3000/real", {
           params: {
             edad: edadA,
@@ -168,6 +168,10 @@ Vue.use(VueRouter);
           }) .then(response => {
         this.titulo=response.data.precio;
         this.recogerDatos(response);
+        this.generaAleatorio(response);
+        this.generaAleatorio1(response);
+        this.generaAleatorio2(response);
+        this.generaAleatorio3(response);
         
       });
     
@@ -177,7 +181,10 @@ Vue.use(VueRouter);
         alert("Has pulsado este boton");
       },
        recogerDatos(respuesta){
-         for(var i =0; i<4;i++){
+
+         
+         for(var i =0; i<respuesta.data.length;i++){
+           
           this.titulo=respuesta.data[i].nombre;
           this.titulos[i]=this.titulo;
           this.edad=respuesta.data[i].edad;
@@ -193,9 +200,39 @@ Vue.use(VueRouter);
          }
       },
 
+      generaAleatorio(respuesta){
+        this.aleatorio=Math.floor((Math.random()*(respuesta.data.length-0)));
+        
+        while(this.aleatorio==this.aleatorio1||this.aleatorio==this.aleatorio2||this.aleatorio==this.aleatorio3){
+          this.aleatorio=Math.floor(Math.random()*(respuesta.data.length-0));
+        }
+      },
+      generaAleatorio1(respuesta){
+        this.aleatorio1=Math.floor(Math.random()*(respuesta.data.length-0));
+        
+         while(this.aleatorio1==this.aleatorio||this.aleatorio1==this.aleatorio2||this.aleatorio1==this.aleatorio3){
+          this.aleatorio1=Math.floor(Math.random()*(respuesta.data.length-0));
+        }
+      },
+      generaAleatorio2(respuesta){
+        this.aleatorio2=Math.floor(Math.random()*(respuesta.data.length-0));
+         while(this.aleatorio2==this.aleatorio||this.aleatorio2==this.aleatorio1||this.aleatorio2==this.aleatorio3){
+          this.aleatorio2=Math.floor(Math.random()*(respuesta.data.length-0));
+        }
+      },
+      generaAleatorio3(respuesta){
+        this.aleatorio3=Math.floor(Math.random()*(respuesta.data.length-0));
+        
+         while(this.aleatorio3==this.aleatorio||this.aleatorio3==this.aleatorio2||this.aleatorio3==this.aleatorio1){
+          this.aleatorio3=Math.floor(Math.random()*(respuesta.data.length-0));
+        
+        }
+      },
+
+
       devolverCarta(){
   
-          alert("La carta es: " + this.$route.query.edad);
+           this.Carta=this.$route.query.edad;
       
           if(this.Carta==1){
             this.edad_carta=0;
@@ -217,8 +254,7 @@ Vue.use(VueRouter);
       devolverText(j){
         var texto;
        
-        texto="El autor de este libro es,"+ this.autores[j]+ ", el precio es "+this.precios[j]+ " euros, la puntuacion de este libro es, "+this.puntuaciones[j]+ "y este es el resumen del libro: ";
-        
+        texto="El autor de este libro es,"+ this.autores[j]+ ", el precio es "+this.precios[j]+ " euros, la puntuacion de este libro es, "+this.puntuaciones[j];
         return texto;
       },
       devolverImagen(j){
@@ -236,8 +272,11 @@ Vue.use(VueRouter);
       edad_carta:"",
       puntuacion:"",
       imagen:"",
-      Carta: 1,
-      prueba: 2,
+      aleatorio:2,
+      aleatorio1:3,
+      aleatorio2:5,
+      aleatorio3:4,
+    
 
       titulos: [],
       autores: [],
